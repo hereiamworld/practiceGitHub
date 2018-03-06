@@ -92,7 +92,11 @@ while (Hlife and Clife > 0):
 #HUMAN ACTIONS
     answer = 1
     while(answer == 1):
-        actionNum = int(input("\n\t\t\t     Enter action: "))
+        actionStr = input("\n\t\t\t     Enter action: ")
+        if(actionStr.isdigit()):
+            actionNum= int(actionStr)
+        else:
+            actionNum= 0
         answer = 0
         if(actionNum != 1 and  actionNum != 2 and actionNum != 3):
            answer = 1
