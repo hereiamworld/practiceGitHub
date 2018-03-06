@@ -1,4 +1,4 @@
-#import gameAI
+from gameAI import GameAI
 from random import *
 #3/2/2018
 #Alexander & Alexandre
@@ -73,20 +73,23 @@ else:
     Csheild = '∞'
     Cshoot  = 0
     Clife   = 10
+    
+gameai = GameAI(Clife,Cammo,Hlife,Hammo)
+
 
 #other variables
 roundNum = 0
 #Gameplay
-while (Hlife and Clife > 0):
+while (Hlife and gameai.getHp() > 0):
     print(space2) 
     roundNum += 1
     print("|\t\t\t\tRound", roundNum,"\t\t\t\t|")
     print(space3)    
     print("|\t",myName,"\t\t|\tACTIONS\t\t|\t ", enemyName,"\t|")
     print(space3)
-    print("|\tAmmo   = ",Hammo,"\t|\t1 = Shoot\t|\tAmmo   = ",Cammo,"\t|")
+    print("|\tAmmo   = ",Hammo,"\t|\t1 = Shoot\t|\tAmmo   = ",gameai.getBullets(),"\t|")
     print("|\tSheild = ",Hsheild,"\t|\t2 = Sheild\t|\tSheild = ",Csheild,"\t|")
-    print("|\tHealth = ",Hlife,"\t|\t3 = Reload\t|\tHealth = ",Clife,"\t|")
+    print("|\tHealth = ",Hlife,"\t|\t3 = Reload\t|\tHealth = ",gameai.getHp(),"\t|")
     print(space3)
 
 #HUMAN ACTIONS
@@ -106,41 +109,31 @@ while (Hlife and Clife > 0):
             print("\n\t!!!!!No Ammo, please try again!!!!!\n"+space)    
 
 #COMPUTER ACTIONS  
-    if roundNum == 1:
-        Caction = 3
-    elif Cammo != 0:
-        Caction = randint(1,3)
-    else:
-        Caction = randint(2,3)    
+    Caction = gameai.action()   
 
 #Both Actions(Results)
     result = actionNum*10 + Caction 
 
     if result == 11:
         Hammo -= 1
-        Cammo -= 1
         Hlife -= 1
-        Clife -= 1
+        gameai.takeHit()
         print("\t\t\tBoth of ya'll got shot!")
     elif result == 12:
         Hammo -= 1
         print("\t\t\t"+enemyName+" deflected the bullet")
     elif result == 13:
         Hammo -= 1
-        Cammo += 1
-        Clife -= 1
-        print("\t\t\tYou shot "+ enemyName)
+        gameai.takeHit()
+        print("\t\t\tYou shot "+ enemyName+ " as he reloaded")
     elif result == 21:
-        Cammo -=1
         print("\t\t\tYou deflected the bullet") 
     elif result == 22:
         print("\t\t\tBoth of ya'll sheilded")
     elif result ==23:
-        Cammo += 1
         print("\t\t\t"+enemyName +" reloaded as you sheilded")
     elif result ==31:
         Hammo +=1
-        Cammo -= 1
         Hlife -= 1
         print("\t\t\t"+enemyName+" shot you as you reloaded")
     elif result == 32:
@@ -149,16 +142,16 @@ while (Hlife and Clife > 0):
     elif result == 33:
         print("\t\t\tYa'll both reloaded")
         Hammo += 1
-        Cammo += 1
     else:
-        print("\t\t\twtf did you do to break this?")                                   
+        print("\t\t\twtf did you do to break this?")
+    gameai.changeState(Hlife,Hammo)
 #END    
-if Hlife ==0 and Clife == 0:
+if Hlife ==0 and gameai.getHp() == 0:
     print(space2) 
     print("|\t\t\tYa'll Killed each other\t\t\t\t|")
     print("|\t\t\t\tTIE!!!!\t\t\t\t\t|")
     print(space3) 
-elif Clife == 0:
+elif (gameai.getHp() == 0):
     print(space2) 
     print("|\t\t\t\tYou killed "+enemyName+"!\t\t\t|")
     print("|\t\t\t\tYOU WIN!!!!\t\t\t\t|")
