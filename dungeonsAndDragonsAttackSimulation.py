@@ -1,3 +1,5 @@
+import time
+
 class Die:
     def __init__(self,numSides):
         self.numSides = numSides
@@ -59,8 +61,8 @@ class SaveAttack:
         return self.ability
     
     def checkSave(self,saveNum):
-        if(saveNum>=saveDC):
-            return True
+        if (saveNum >= self.saveDC):
+            return True 
         else:
             return False
 
@@ -80,7 +82,7 @@ class Entity:
     
     def makeSave(self,ability,DC,rollType):
         save=D20()
-        if(save.roll(rollType) + saves[ability] >= DC):
+        if(save.roll(rollType) + self.saves[ability] >= DC):
             return False
         else:
             return True
@@ -97,7 +99,7 @@ class Entity:
             enemy.takeDmg(atk.dealDmg())
 
     def forceSave(self,saveNum,enemy):
-        save = saves[saveNum]
+        save = self.saves[saveNum]
         if(enemy.makeSave(save.ability,save.saveDC,"e")):
             enemy.takeDmg(save.dealDmg())
 
@@ -107,6 +109,16 @@ class Entity:
         else:
             return False
 
+def fightCommentary(subject, damage) :
+    print(f"{subject} attacks!")
+    time.sleep(1)
+    if(damage > 10):
+        print(f"BRUTAL hit for {damage}")
+    elif(damage > 0) :
+        print(f"Hit for {damage}!")
+    else :
+        print("Whiff...")
+        
 secondWindUseLoss=0
 secondWindUseWin=0
 goblinWins=0
@@ -117,12 +129,33 @@ for i in range(0,1000000):
     club  = Attack(d20,Die(8),0,2,2)
     fighter = Entity(13,18,[],[sword],[])
     goblin  = Entity(7,15,[],[club],[])
+
+    fightHp = fighter.hp
+    gobHp = goblin.hp
     secondWind = True
     
 
     while(goblin.isAlive() and fighter.isAlive()):
+        ghp = goblin.hp
         fighter.makeAttack(0,"e",goblin)
+        fightCommentary("Fighter", (ghp - goblin.hp))
+        gobHp -= (ghp - goblin.hp)
+        if(gobHp <= 0):
+            fighterWins+=1
+            print("Killing blow!\nFighter wins!\n\n")
+            break
+        time.sleep(2)
+
+        fhp = fighter.hp
         goblin.makeAttack(0,"e",fighter)
+        fightCommentary("Goblin", (fhp - fighter.hp))
+        fightHp -= (fhp - fighter.hp)
+        if(fightHp <= 0):
+            goblinWins+=1
+            print("Killing blow!\nGoblin wins!\n\n")
+            break
+        time.sleep(2)
+
         if(fighter.hp<6 and secondWind):
             fighter.takeDmg(-(Die(10).roll()+1))
             #print("Second Wind")
