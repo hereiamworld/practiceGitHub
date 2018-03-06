@@ -2,7 +2,7 @@ from gameAI import GameAI
 from random import *
 #3/2/2018
 #Alexander & Alexandre
-#Shoot, Sheild, Reload
+#Shoot, shield, Reload
  
 
 #Cheats
@@ -11,11 +11,11 @@ space2 = "______________________________________________________________________
 space3 = "|-----------------------------------------------------------------------|" 
 #Intro
 print(space2)
-print("\t\tSHOOT SHEILD RELOAD by Alexes")
+print("\t\tSHOOT SHIELD RELOAD by Alexes")
 print(space)
 
 print("\n\t\tThe rules of the game:")
-print("  Shoot other person without them sheilding and Win! ")
+print("  Shoot other person without them shielding and Win! ")
 print(space2) 
 
 #Names
@@ -48,31 +48,31 @@ print("\n\t\tYou have selected: \""+difficulty+"\"")
 #Human/Computer variables
 if difficulty == "EASY":
     Hammo   = 0
-    Hsheild = '∞'
+    Hshield = 10
     Hshoot  = 0
-    Hlife   = 10
+    Hlife   = 12
     Cammo   = 0
-    Csheild = '∞'
+    Cshield = '∞'
     Cshoot  = 0
     Clife   = 5
 elif difficulty == "MEDIUM":
     Hammo   = 0
-    Hsheild = '∞'
+    Hshield = 9
     Hshoot  = 0
     Hlife   = 3
-    Cammo   = 0
-    Csheild = '∞'
+    Cammo   = 1
+    Cshield = '∞'
     Cshoot  = 0
     Clife   = 3
 else:
     Hammo   = 0
-    Hsheild = '∞'
+    Hshield = 6
     Hshoot  = 0
-    Hlife   = 5
-    Cammo   = 10
-    Csheild = '∞'
+    Hlife   = 3
+    Cammo   = 2
+    Cshield = '∞'
     Cshoot  = 0
-    Clife   = 10
+    Clife   = 4
     
 gameai = GameAI(Clife,Cammo,Hlife,Hammo)
 
@@ -88,7 +88,7 @@ while (Hlife and gameai.getHp() > 0):
     print("|\t",myName,"\t\t|\tACTIONS\t\t|\t ", enemyName,"\t|")
     print(space3)
     print("|\tAmmo   = ",Hammo,"\t|\t1 = Shoot\t|\tAmmo   = ",gameai.getBullets(),"\t|")
-    print("|\tSheild = ",Hsheild,"\t|\t2 = Sheild\t|\tSheild = ",Csheild,"\t|")
+    print("|\tShield = ",Hshield,"\t|\t2 = Shield\t|\tShield = ",Cshield,"\t|")
     print("|\tHealth = ",Hlife,"\t|\t3 = Reload\t|\tHealth = ",gameai.getHp(),"\t|")
     print(space3)
 
@@ -106,7 +106,10 @@ while (Hlife and gameai.getHp() > 0):
            print("\n\t!!!!!Invalid answer, please try again!!!!!\n"+space)
         if (actionNum == 1 and Hammo == 0):
             answer = 1
-            print("\n\t!!!!!No Ammo, please try again!!!!!\n"+space)    
+            print("\n\t!!!!!No Ammo, please try again!!!!!\n"+space)
+        if (actionNum ==2 and Hshield == 0):
+            answer = 1
+            print("\n\t!!!!!No Shield, choose a different option!!!!!\n"+space)
 
 #COMPUTER ACTIONS  
     Caction = gameai.action()   
@@ -127,18 +130,21 @@ while (Hlife and gameai.getHp() > 0):
         gameai.takeHit()
         print("\t\t\tYou shot "+ enemyName+ " as he reloaded")
     elif result == 21:
+        Hshield-=1
         print("\t\t\tYou deflected the bullet") 
     elif result == 22:
-        print("\t\t\tBoth of ya'll sheilded")
+        Hshield-=1
+        print("\t\t\tBoth of ya'll shielded")
     elif result ==23:
-        print("\t\t\t"+enemyName +" reloaded as you sheilded")
+        Hshield-=1
+        print("\t\t\t"+enemyName +" reloaded as you shielded")
     elif result ==31:
         Hammo +=1
         Hlife -= 1
         print("\t\t\t"+enemyName+" shot you as you reloaded")
     elif result == 32:
         Hammo += 1
-        print("\t\t\tYou reloaded as "+enemyName+" sheilded")
+        print("\t\t\tYou reloaded as "+enemyName+" shielded")
     elif result == 33:
         print("\t\t\tYa'll both reloaded")
         Hammo += 1

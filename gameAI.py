@@ -2,7 +2,13 @@ import random
 
 #takes percentage chance of these being the choice
 def chanceOf(one,two,three):
-    pass
+    chanceList =[one,two,three]
+    numList=[]
+    for i in range(0,3):
+        for j in range(0,chanceList[i]):
+            numList.append(i+1)
+    return random.choice(numList)
+        
 
 class GameAI:
     
@@ -18,11 +24,19 @@ class GameAI:
         if(self.state==0):
             newAction = 3
         elif(self.state==1):
-            newAction = random.choice([1,3])
+            if(self.bullets<2):
+                newAction = chanceOf(1,0,3)
+            else:
+                newAction = chanceOf(4,0,1)
         elif(self.state==2):
-            newAction = random.choice([1,2,3])
+            if(self.bullets<2):
+                newAction = chanceOf(1,2,2)
+            elif(self.bullets<4):
+                newAction = chanceOf(2,1,1)
+            else:
+                newAction = chanceOf(3,1,0)	
         else:
-            newAction = random.choice([2,3])
+            newAction = chanceOf(0,1,2)
 
         if(newAction==3):
             self.bullets+=1
