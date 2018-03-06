@@ -50,7 +50,7 @@ if difficulty == "EASY":
     Hammo   = 0
     Hshield = 10
     Hshoot  = 0
-    Hlife   = 12
+    Hlife   = 6
     Cammo   = 0
     Cshield = '∞'
     Cshoot  = 0

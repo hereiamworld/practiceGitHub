@@ -10,8 +10,11 @@ def chanceOf(one,two,three):
     return random.choice(numList)
         
 
-class GameAI:
-    
+#state 0 is both player and ai dont have bullets
+#state 1 ai has at least 1 bullet and has more hp than player
+#state 2 ai has at least 1 bullet and has less or equal hp than player
+#state 3 ai has 0 bullets player has at least 1
+class GameAI:  
     def __init__(self,life,ammo,pl,pb):
         self.state=0
         self.life=life
@@ -25,18 +28,18 @@ class GameAI:
             newAction = 3
         elif(self.state==1):
             if(self.bullets<2):
-                newAction = chanceOf(1,0,3)
+                newAction = chanceOf(25,0,75)
             else:
-                newAction = chanceOf(4,0,1)
+                newAction = chanceOf(80,0,20)
         elif(self.state==2):
             if(self.bullets<2):
-                newAction = chanceOf(1,2,2)
+                newAction = chanceOf(30,30,40)
             elif(self.bullets<4):
-                newAction = chanceOf(2,1,1)
+                newAction = chanceOf(50,30,20)
             else:
-                newAction = chanceOf(3,1,0)	
+                newAction = chanceOf(75,25,0)	
         else:
-            newAction = chanceOf(0,1,2)
+            newAction = chanceOf(0,33,67)
 
         if(newAction==3):
             self.bullets+=1
