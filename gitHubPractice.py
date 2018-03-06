@@ -164,7 +164,3 @@ elif Hlife == 0:
     print("|\t\t\t\t"+enemyName+" killed you!\t\t\t|")
     print("|\t\t\t\tYOU LOSE!!!!\t\t\t\t|")
     print(space3)
-
-    
-ammo = 0
-sheild = 0
