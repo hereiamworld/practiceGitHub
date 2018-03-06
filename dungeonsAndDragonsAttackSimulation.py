@@ -160,20 +160,10 @@ for i in range(0,1000000):
             fighter.takeDmg(-(Die(10).roll()+1))
             #print("Second Wind")
             secondWind=False
-            
 
-    if(goblin.isAlive()):
-        #print("goblin wins")
-        #print ("goblin hp remaining: ",goblin.hp)
-        goblinWins+=1
-        if(secondWind==False):
-            secondWindUseLoss+=1
-    else:
-        #print("fighter wins")
-        #print ("fighter hp remaining: ",fighter.hp)
-        fighterWins+=1
-        if(secondWind==False):
-            secondWindUseWin+=1
+    check = input("Again? (y/n)\n")
+    if(check != "y" and check != "Y") :
+        break
 
 print("")
 print("")
