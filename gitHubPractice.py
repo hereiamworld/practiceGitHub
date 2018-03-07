@@ -49,29 +49,23 @@ print("\n\t\tYou have selected: \""+difficulty+"\"")
 if difficulty == "EASY":
     Hammo   = 0
     Hshield = 10
-    Hshoot  = 0
     Hlife   = 6
     Cammo   = 0
     Cshield = '∞'
-    Cshoot  = 0
     Clife   = 5
 elif difficulty == "MEDIUM":
     Hammo   = 0
     Hshield = 9
-    Hshoot  = 0
     Hlife   = 3
     Cammo   = 1
     Cshield = '∞'
-    Cshoot  = 0
     Clife   = 3
 else:
     Hammo   = 0
     Hshield = 6
-    Hshoot  = 0
     Hlife   = 3
     Cammo   = 2
     Cshield = '∞'
-    Cshoot  = 0
     Clife   = 4
     
 gameai = GameAI(Clife,Cammo,Hlife,Hammo)
